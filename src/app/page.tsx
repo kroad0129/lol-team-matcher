@@ -489,7 +489,7 @@ export default function Page() {
                   cursor: loading ? "not-allowed" : "pointer",
                 }}
               >
-                {loading ? "⏳ 배정 중..." : "팀 자동 배정하기"}
+                {loading ? "배정 중..." : "팀 자동 배정하기"}
               </button>
             </div>
           </div>
