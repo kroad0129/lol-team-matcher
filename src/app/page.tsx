@@ -86,7 +86,7 @@ export default function Page() {
       const data = await res.json();
       setResult(data);
       alert("팀 배정이 완료되었습니다!");
-    } catch (err) {
+    } catch {
       alert("팀 자동 배정 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
