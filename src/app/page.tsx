@@ -589,7 +589,7 @@ export default function Page() {
                               fontWeight: "500",
                             }}
                           >
-                            {player.mainLane}
+                            {player.mainLane} / {player.subLane}
                           </span>
                           <span
                             style={{
@@ -672,7 +672,7 @@ export default function Page() {
                               fontWeight: "500",
                             }}
                           >
-                            {player.mainLane}
+                            {player.mainLane} / {player.subLane}
                           </span>
                           <span
                             style={{
