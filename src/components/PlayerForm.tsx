@@ -1,34 +1,57 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
 export type PlayerInput = {
-  name: string
-  mainLane: string
-  subLane: string
-  tier: string
-  tierLevel?: string
-  power?: number
-}
+  name: string;
+  mainLane: string;
+  subLane: string;
+  tier: string;
+  tierLevel?: string;
+  power?: number;
+};
 
 type PlayerFormProps = {
-  index: number
-  value: PlayerInput
-  onChange: (index: number, updated: PlayerInput) => void
-  mode: "tier" | "power"
-}
+  index: number;
+  value: PlayerInput;
+  onChange: (index: number, updated: PlayerInput) => void;
+  mode: "tier" | "power";
+};
 
-const lanes = ["상관없음", "탑", "정글", "미드", "원딜", "서포터"]
-const tiers = ["아이언", "브론즈", "실버", "골드", "플래티넘", "다이아", "마스터", "그랜드마스터", "챌린저"]
-const tierLevels = ["1", "2", "3", "4"]
+const lanes = ["상관없음", "탑", "정글", "미드", "원딜", "서포터"];
+const tiers = [
+  "아이언",
+  "브론즈",
+  "실버",
+  "골드",
+  "플래티넘",
+  "에메랄드",
+  "다이아",
+  "마스터",
+  "그랜드마스터",
+  "챌린저",
+];
+const tierLevels = ["1", "2", "3", "4"];
 
-const PlayerForm: React.FC<PlayerFormProps> = ({ index, value, onChange, mode }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value: newValue } = e.target
-    onChange(index, { ...value, [name]: name === "power" ? Number(newValue) : newValue })
-  }
+const PlayerForm: React.FC<PlayerFormProps> = ({
+  index,
+  value,
+  onChange,
+  mode,
+}) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value: newValue } = e.target;
+    onChange(index, {
+      ...value,
+      [name]: name === "power" ? Number(newValue) : newValue,
+    });
+  };
 
-  const showTierLevel = mode === "tier" && !["마스터", "그랜드마스터", "챌린저"].includes(value.tier)
+  const showTierLevel =
+    mode === "tier" &&
+    !["마스터", "그랜드마스터", "챌린저"].includes(value.tier);
 
   return (
     <tr className="text-center align-middle">
@@ -123,7 +146,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ index, value, onChange, mode })
         )}
       </td>
     </tr>
-  )
-}
+  );
+};
 
-export default PlayerForm
+export default PlayerForm;

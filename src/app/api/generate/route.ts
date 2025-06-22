@@ -7,6 +7,7 @@ const TIERS = [
   "실버",
   "골드",
   "플래티넘",
+  "에메랄드",
   "다이아",
   "마스터",
   "그랜드마스터",
@@ -84,7 +85,7 @@ function power(p: PlayerInput, mode: "tier" | "power") {
 
   const idx = TIERS.indexOf(p.tier);
   const base = idx * 4;
-  if (idx >= 6) return base + 4;
+  if (idx >= 7) return base + 4;
 
   const level = Number(p.tierLevel ?? "1");
   return base + (5 - level);
