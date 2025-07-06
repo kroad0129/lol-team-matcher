@@ -115,7 +115,7 @@ export default function Page() {
           fontWeight: "bold",
         }}
       >
-        Created by T!b3tF0x (김태희)
+        Created by T!b3tF0x
       </div>
 
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
