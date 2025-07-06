@@ -8,11 +8,13 @@ type SummonerInfo = {
   soloTier?: string;
   soloRank?: string;
   soloWinRate?: string;
+  soloVeteran?: boolean;
+  soloHotStreak?: boolean;
   flexTier?: string;
   flexRank?: string;
   flexWinRate?: string;
-  veteran?: boolean;
-  hotStreak?: boolean;
+  flexVeteran?: boolean;
+  flexHotStreak?: boolean;
   error?: string;
 };
 
@@ -58,11 +60,13 @@ export default function TenSummonerPage() {
               soloTier: data.soloRank?.tier || "언랭크",
               soloRank: data.soloRank?.rank || "-",
               soloWinRate: data.soloRank?.winRate || "-",
+              soloVeteran: data.soloRank?.veteran || false,
+              soloHotStreak: data.soloRank?.hotStreak || false,
               flexTier: data.flexRank?.tier || "언랭크",
               flexRank: data.flexRank?.rank || "-",
               flexWinRate: data.flexRank?.winRate || "-",
-              veteran: data.soloRank?.veteran || false,
-              hotStreak: data.soloRank?.hotStreak || false,
+              flexVeteran: data.flexRank?.veteran || false,
+              flexHotStreak: data.flexRank?.hotStreak || false,
             };
           } else {
             return {
@@ -122,6 +126,8 @@ export default function TenSummonerPage() {
               <th style={thStyle}>솔로 티어</th>
               <th style={thStyle}>솔로 랭크</th>
               <th style={thStyle}>솔로 승률</th>
+              <th style={thStyle}>유지중</th>
+              <th style={thStyle}>연승중</th>
               <th style={thStyle}>자유 티어</th>
               <th style={thStyle}>자유 랭크</th>
               <th style={thStyle}>자유 승률</th>
@@ -157,13 +163,15 @@ export default function TenSummonerPage() {
                 <td style={tdStyle}>
                   {s.soloWinRate !== undefined ? `${s.soloWinRate}%` : "-"}
                 </td>
+                <td style={tdStyle}>{s.soloVeteran ? "✅" : "❌"}</td>
+                <td style={tdStyle}>{s.soloHotStreak ? "🔥" : "❌"}</td>
                 <td style={tdStyle}>{s.flexTier ?? "-"}</td>
                 <td style={tdStyle}>{s.flexRank ?? "-"}</td>
                 <td style={tdStyle}>
                   {s.flexWinRate !== undefined ? `${s.flexWinRate}%` : "-"}
                 </td>
-                <td style={tdStyle}>{s.veteran ? "✅ 유지중" : "❌"}</td>
-                <td style={tdStyle}>{s.hotStreak ? "🔥 연승중" : "❌"}</td>
+                <td style={tdStyle}>{s.flexVeteran ? "✅" : "❌"}</td>
+                <td style={tdStyle}>{s.flexHotStreak ? "🔥" : "❌"}</td>
                 <td style={{ ...tdStyle, color: "red" }}>{s.error || "-"}</td>
               </tr>
             ))}
