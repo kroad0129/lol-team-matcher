@@ -89,17 +89,16 @@ export default function TenSummonerPage() {
           padding: "24px",
         }}
       >
-        <h1
+        <h2
           style={{
-            fontSize: "24px",
-            fontWeight: "bold",
+            fontSize: "18px",
+            fontWeight: "600",
             color: "#1f2937",
-            marginBottom: "16px",
-            textAlign: "center",
+            margin: "0",
           }}
         >
-          🔍 소환사 10명 정보 조회
-        </h1>
+          소환사 10명 정보 조회
+        </h2>
 
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
