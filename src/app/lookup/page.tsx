@@ -64,7 +64,7 @@ export default function TenSummonerPage() {
           } else {
             return { ...s, error: data.error.status?.message || data.error };
           }
-        } catch (err) {
+        } catch (_) {
           return { ...s, error: "API 호출 실패" };
         }
       })
