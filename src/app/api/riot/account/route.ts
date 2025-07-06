@@ -1,6 +1,16 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
+type LeagueEntry = {
+  queueType: string;
+  tier: string;
+  rank: string;
+  wins: number;
+  losses: number;
+  veteran: boolean;
+  hotStreak: boolean;
+};
+
 async function riotApiGet(url: string) {
   const res = await axios.get(url, {
     headers: {
@@ -23,7 +33,6 @@ export async function GET(req: Request) {
   }
 
   try {
-    // ✅ Step 1. puuid 조회
     const accountData = await riotApiGet(
       `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(
         gameName
@@ -31,17 +40,15 @@ export async function GET(req: Request) {
     );
     const puuid = accountData.puuid;
 
-    // ✅ Step 2. 랭크 정보 조회 (League-V4 by-puuid)
-    const ranks = await riotApiGet(
+    const ranks = (await riotApiGet(
       `https://kr.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}`
-    );
+    )) as LeagueEntry[];
 
-    // ✅ Step 3. 개인랭크, 자유랭크만 필터링 및 필요한 필드만 반환
     const soloEntry = ranks.find(
-      (entry: any) => entry.queueType === "RANKED_SOLO_5x5"
+      (entry) => entry.queueType === "RANKED_SOLO_5x5"
     );
     const flexEntry = ranks.find(
-      (entry: any) => entry.queueType === "RANKED_FLEX_SR"
+      (entry) => entry.queueType === "RANKED_FLEX_SR"
     );
 
     const soloRank = soloEntry
@@ -70,13 +77,16 @@ export async function GET(req: Request) {
         }
       : null;
 
-    // ✅ 최종 반환
     return NextResponse.json({ soloRank, flexRank });
-  } catch (error: any) {
-    console.error("Riot API Error:", error.response?.data || error.message);
+  } catch (error) {
+    const err = error as {
+      response?: { data: unknown; status: number };
+      message: string;
+    };
+    console.error("Riot API Error:", err.response?.data || err.message);
     return NextResponse.json(
-      { error: error.response?.data || "Internal server error" },
-      { status: error.response?.status || 500 }
+      { error: err.response?.data || "Internal server error" },
+      { status: err.response?.status || 500 }
     );
   }
 }

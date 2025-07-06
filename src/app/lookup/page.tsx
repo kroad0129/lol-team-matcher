@@ -5,9 +5,12 @@ import { useState } from "react";
 type SummonerInfo = {
   name: string;
   tag: string;
-  tier?: string;
-  rank?: string;
-  winRate?: string;
+  soloTier?: string;
+  soloRank?: string;
+  soloWinRate?: string;
+  flexTier?: string;
+  flexRank?: string;
+  flexWinRate?: string;
   veteran?: boolean;
   hotStreak?: boolean;
   error?: string;
@@ -49,9 +52,12 @@ export default function TenSummonerPage() {
           if (res.ok) {
             return {
               ...s,
-              tier: data.soloRank?.tier || "언랭크",
-              rank: data.soloRank?.rank || "",
-              winRate: data.soloRank?.winRate || "",
+              soloTier: data.soloRank?.tier || "언랭크",
+              soloRank: data.soloRank?.rank || "-",
+              soloWinRate: data.soloRank?.winRate || "-",
+              flexTier: data.flexRank?.tier || "언랭크",
+              flexRank: data.flexRank?.rank || "-",
+              flexWinRate: data.flexRank?.winRate || "-",
               veteran: data.soloRank?.veteran || false,
               hotStreak: data.soloRank?.hotStreak || false,
             };
@@ -94,7 +100,8 @@ export default function TenSummonerPage() {
             fontSize: "18px",
             fontWeight: "600",
             color: "#1f2937",
-            margin: "0",
+            margin: "0 0 16px 0",
+            textAlign: "center",
           }}
         >
           소환사 10명 정보 조회
@@ -106,9 +113,12 @@ export default function TenSummonerPage() {
               <th style={thStyle}>#</th>
               <th style={thStyle}>닉네임</th>
               <th style={thStyle}>태그</th>
-              <th style={thStyle}>티어</th>
-              <th style={thStyle}>랭크</th>
-              <th style={thStyle}>승률</th>
+              <th style={thStyle}>솔로 티어</th>
+              <th style={thStyle}>솔로 랭크</th>
+              <th style={thStyle}>솔로 승률</th>
+              <th style={thStyle}>자유 티어</th>
+              <th style={thStyle}>자유 랭크</th>
+              <th style={thStyle}>자유 승률</th>
               <th style={thStyle}>유지중</th>
               <th style={thStyle}>연승중</th>
               <th style={thStyle}>오류</th>
@@ -136,9 +146,12 @@ export default function TenSummonerPage() {
                     style={{ ...inputStyle, maxWidth: "80px" }}
                   />
                 </td>
-                <td style={tdStyle}>{s.tier || "-"}</td>
-                <td style={tdStyle}>{s.rank || "-"}</td>
-                <td style={tdStyle}>{s.winRate ? `${s.winRate}%` : "-"}</td>
+                <td style={tdStyle}>{s.soloTier}</td>
+                <td style={tdStyle}>{s.soloRank}</td>
+                <td style={tdStyle}>{s.soloWinRate}%</td>
+                <td style={tdStyle}>{s.flexTier}</td>
+                <td style={tdStyle}>{s.flexRank}</td>
+                <td style={tdStyle}>{s.flexWinRate}%</td>
                 <td style={tdStyle}>{s.veteran ? "✅ 유지중" : "❌"}</td>
                 <td style={tdStyle}>{s.hotStreak ? "🔥 연승중" : "❌"}</td>
                 <td style={{ ...tdStyle, color: "red" }}>{s.error || "-"}</td>
