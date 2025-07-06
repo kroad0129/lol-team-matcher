@@ -31,7 +31,10 @@ export default function TenSummonerPage() {
     value: string
   ) => {
     const newSummoners = [...summoners];
-    newSummoners[index][field] = value;
+    newSummoners[index] = {
+      ...newSummoners[index],
+      [field]: value as SummonerInfo[typeof field],
+    };
     setSummoners(newSummoners);
   };
 
@@ -62,9 +65,12 @@ export default function TenSummonerPage() {
               hotStreak: data.soloRank?.hotStreak || false,
             };
           } else {
-            return { ...s, error: data.error.status?.message || data.error };
+            return {
+              ...s,
+              error: data.error?.status?.message || data.error || "API 오류",
+            };
           }
-        } catch (_) {
+        } catch {
           return { ...s, error: "API 호출 실패" };
         }
       })
@@ -146,12 +152,16 @@ export default function TenSummonerPage() {
                     style={{ ...inputStyle, maxWidth: "80px" }}
                   />
                 </td>
-                <td style={tdStyle}>{s.soloTier}</td>
-                <td style={tdStyle}>{s.soloRank}</td>
-                <td style={tdStyle}>{s.soloWinRate}%</td>
-                <td style={tdStyle}>{s.flexTier}</td>
-                <td style={tdStyle}>{s.flexRank}</td>
-                <td style={tdStyle}>{s.flexWinRate}%</td>
+                <td style={tdStyle}>{s.soloTier ?? "-"}</td>
+                <td style={tdStyle}>{s.soloRank ?? "-"}</td>
+                <td style={tdStyle}>
+                  {s.soloWinRate !== undefined ? `${s.soloWinRate}%` : "-"}
+                </td>
+                <td style={tdStyle}>{s.flexTier ?? "-"}</td>
+                <td style={tdStyle}>{s.flexRank ?? "-"}</td>
+                <td style={tdStyle}>
+                  {s.flexWinRate !== undefined ? `${s.flexWinRate}%` : "-"}
+                </td>
                 <td style={tdStyle}>{s.veteran ? "✅ 유지중" : "❌"}</td>
                 <td style={tdStyle}>{s.hotStreak ? "🔥 연승중" : "❌"}</td>
                 <td style={{ ...tdStyle, color: "red" }}>{s.error || "-"}</td>
